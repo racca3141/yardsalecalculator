@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+    body {
+	  margin: 0px;
+	  height: 100vh;
+	  font-family: arial;
+	  background-color: #F0F0F0;
+	}
+	
+	/* Navigation ------------------------------------- */
+	
+	#nav {
+      display: flex;
+	  background-color: black;
+	  color: white;
+	  padding: 5px;
+    }
+	
+	#nav a {
+	  padding: 5px;
+	}
+	
+	/* Mainpage -------------------------------------- */
+    
+	#adjustDisplay {
+	  display: grid;
+	}
+	
+	@media only screen and (max-width: 767px) {
+	  #adjustDisplay {
+	    grid-template-columns: auto;
+	  }
+	}
+	
+	
+	@media only screen and (min-width: 768px) {
+	  #adjustDisplay {
+	    grid-template-columns: 40% auto;
+	  }
+	}
+	
+	/* Ticket view ------------------------------------ */
+	
+	#ticketview {
+	  height: 120px;
+	  color: gray;
+	  background-color: white;
+	  padding: 10px;
+	  margin: 5px;
+	  
+	  overflow: auto;
+      scrollbar-color: auto;
+	  
+	}
+	
+	#ticketview > div:last-child {
+	  color: black;
+	} 
+	
+	@media only screen and (min-width: 768px) {
+	  #ticketview {
+	    height: 500px;
+	  }
+	}
+	
+	.ticketitem {
+	  display: grid;
+	  grid-template-columns: 60% 20% 20%;
+	}
+	
+    /* Buttons ------------------------------------ */
+	
+	.inputBox{
+	  border: 1px solid black;
+      padding: 6px;
+      text-align: center;
+      background-color: white;
+      border-radius: 3px;
+	  margin: 1px;
+	}
+	
+  
+    .centerbuttons1 {
+	  display: grid;
+	  grid-template-columns: repeat(5, minmax(60px, 1fr));
+	  margin: 5px;
+	}
+	
+	.centerbuttons2 {
+	  display: grid;
+	  grid-template-columns: repeat(4, minmax(75px, 1fr));
+	  margin: 5px;
+	}
+	
+	.centerbuttons3 {
+	  display: grid;
+	  grid-template-columns: repeat(5, minmax(60px, 1fr));
+	  margin: 5px;
+	}
+	
+	.btn {  
+	  border-radius: 3px;
+	  border: none;
+      margin: 2px;	
+	  padding: 10px;
+	}
+	
+	.centerbuttons1 .btn {
+	  background-color: midnightblue;
+	  color: white;
+	}
+	
+	
+	.centerbuttons2 .btn {
+	  background-color:darkslateblue;
+	  color: white;
+	}
+	
+	#merch1 {
+      background-color: blue; /* default choice */
+    }
+	
+	.centerbuttons3 .btn {
+	  background-color: slateblue;
+	  color: white;
+	}
+	
+	.btnUndoLast { grid-column: 1/2; }
+    .btnClearTransaction { grid-column: 2/3; }
+    .btnCheckout { grid-column: 4/6; }
+
+    .finishbuttons {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(60px, 1fr));
+      margin: 5px;
+	  margin-top: 10px;
+    }
+	
+	.finishbuttons button{
+	  background-color: orange;
+	  color: white;
+	  border-radius: 3px;
+	  border: none;
+      margin: 2px;
+      padding: 8px;	    
+	}
+	
+	
+	/**** checkout section ****/
+#checkoutButtons {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  
+  padding: 20px;
+}
+
+#payLblAmt {
+  font-size: 16px;
+  border: 1px solid black;
+  text-align: center;
+  width: 60px;
+  padding: 10px;
+  margin: 2px 2px;
+  border-radius: 5px;
+
+}
+
+.payBtn {
+  background-color: lightblue;
+  border: none;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+  width: 85px;
+  border-radius: 4px;
+}
+
+#enterPriceBtn {
+  cursor: not-allowed;
+  
+}
+	
+	
+	
+	
+
+    /* Summary ------------------------------- */	
+	
+	
+    #displayhere {
+      overflow: auto;
+      border: 1px solid lightgray;
+      height: 85vh;
+    }
+
+    #displaysummary {
+ 
+    }
+	
+    .ticket { grid-area: ticket; }
+    .datetime { grid-area: date; }
+    .quantity { grid-area: quantity; }
+    .priceTotal { grid-area: priceTotal; }
+    .pay { grid-area: pay; }
+    .change { grid-area: change; }
+
+    .tickets {
+       display: grid;
+       grid-template-areas:
+         'ticket ticket date date quantity quantity'
+         'priceTotal priceTotal pay pay change change';
+	   padding: 0px;
+       padding-top: 5px;
+    }
+
+    .dark {
+    background-color: white;
+    }
+
+    .tickets > div {
+     
+      font-family: arial;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+
+    .ticketItem {
+      display: grid;
+	  grid-template-columns: repeat(3, minmax(60px, 1fr));
+	
+    }
+
+    .ticketItem > div {
+      text-align: right;
+      font-size: 12px;
+      margin-right: 30px;
+    }
+
+    /* Admin ------------------------------- */
+	
+	.delDB {
+	  padding: 10px;
+	  background-color: white;
+	  margin: 2px;
+	  text-decoration: none;
+	  border: 1px solid gray;
+	  border-radius: 2px;
+	}
+	
+	.delDB:hover {
+	  background-color: lightblue;
+	}
+	
+	#admin {
+	  background-color: white;
+	}
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+  </style>
+  <script>
+    // Switch between pages
+	function openPage(pageName) {
+      var i;
+      var x = document.getElementsByClassName("page");
+	  console.log(pageName);
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";  
+      }
+      document.getElementById(pageName).style.display = "block";	  
+	  //if summary, we need to refresh the page?
+	  if(pageName = 'summary'){
+	    //how do I show the most up to date data from the database?
+	  }
+    }
+	
+	// Add quantity section -------------------------------------------
+	window.amt = 0;
+	function addQty(addA){  
+	  if(amt == 0){
+		if(addA == 0){
+		  document.getElementById("addQtyTotal").innerHTML = "1";
+		  return;
+		}
+		else{
+		  amt = addA;	
+		  document.getElementById("addQtyTotal").innerHTML = amt;
+		  return;
+		}
+	  }
+	  tempAmt = amt * 10 + addA;
+	  if(tempAmt <= 1000){
+	    amt = tempAmt;
+	  }
+		
+	  document.getElementById("addQtyTotal").innerHTML = amt;
+	  //amt.toFixed(2);
+	}
+	
+	function clearAddQty(){
+	  amt = 0;
+      document.getElementById("addQtyTotal").innerHTML = "1";
+	}
+	
+	// Get merchandise section -----------------------------------------------
+	window.previousButtonId = "merch1";
+	window.currentMerch = "General";
+	function getMerch(md, bId){
+	  console.log(md + " " + bId);
+	  currentMerch = md;
+	  //highlight current button and reset color where it came from
+	  document.getElementById(previousButtonId).style.background = "darkslateblue";
+	  previousButtonId = bId;
+	  document.getElementById(bId).style.background = "blue";
+	}
+	
+	function changeMerchButton(){
+	  console.log(previousButtonId);
+	  document.getElementById(previousButtonId).style.background = "darkslateblue";
+	  document.getElementById("centerbuttons2default").style.display = "none";
+	  document.getElementById("centerbuttons2expanded").style.display = "block";
+	  document.getElementById(previousButtonId + "e").style.background = "blue";
+	  previousButtonId = previousButtonId + "e";
+	}
+	
+	
+	// Get price and add price section -------------------------------------------
+	
+	window.price = 0;
+	function getPrice(p){
+      price = p;
+	  //pushing this button will enable the Proceed to checkout button
+	  //and adds the current qty, merch desc, and price to
+	  //the transaction store and screen.
+	  addTicketItem();
+    }
+	
+	function changePriceButton(){
+	  console.log("change the price buttons");
+	  document.getElementById("centerbuttons3default").style.display = "none";
+	  document.getElementById("centerbuttons3expanded").style.display = "block";
+	}
+	
+	
+	window.tempPrice = 0;
+	function addPrice(addP){
+	  console.log("addPrice");
+	  if(tempPrice == 0){
+		if(addP == 0){
+		  return;
+		}
+		tempPrice = (addP * .01);
+	  }
+	  else{
+	    tempP = ((tempPrice * 10) + (addP * .01));
+	    if(tempP <= 1000){
+		  tempPrice = tempP;
+		}
+	  }
+	  document.getElementById("addPriceTotal").innerHTML = tempPrice.toFixed(2);
+	}
+	
+	function clearPriceAmt(){
+	  tempPrice = 0;
+	  document.getElementById("addPriceTotal").innerHTML = "1.00";
+    }
+	
+	function enterPriceAmt(){
+	  window.price = tempPrice;
+	  if (window.price == 0){
+	    window.price = 1;
+	  }
+	  console.log(price + " before rounding.");
+	  price = Math.round((price + Number.EPSILON) * 100) / 100;
+	  console.log("price after: " + price);
+	  addTicketItem();
+    }
+	
+	
+	// Ticket display ------------------------------------------------------------
+	
+	function updateTicketDisplay(){
+	  document.getElementById("ticketview").innerHTML += 
+		"<div class='ticketitem'>" + 
+          "<div>" + currentMerch + "</div>" +
+	      "<div style='text-align: right'>" + amt + "</div>" +
+	      "<div style='text-align: right'>" + window.price.toFixed(2) + "</div>" +
+	    "</div>";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// Reset environment -----------------------------------------------------------
+	
+	function resetEnvironment(){
+	  //amt = 1 again, and general should be the default again, whatever price default it is.
+	  amt = 0;
+	  document.getElementById("addQtyTotal").innerHTML = "1";
+	  
+	  //this has to be done before erasing data in case it was not part of the expanded button section.
+	  document.getElementById(previousButtonId).style.background = "darkslateblue"; 
+	  
+	  window.previousButtonId = "merch1";
+	  window.currentMerch = "General";
+	  
+	  window.price = 0; //async?
+	  window.tempPrice = 0;
+	  
+	  //reset the buttons to their original states for centerbuttons2 and 3
+	  document.getElementById("centerbuttons2default").style.display = "block";
+	  document.getElementById("centerbuttons2expanded").style.display = "none";
+	  document.getElementById(previousButtonId).style.background = "blue"; 
+	  
+	  document.getElementById("centerbuttons3default").style.display = "block";
+	  document.getElementById("centerbuttons3expanded").style.display = "none";
+	  document.getElementById("addPriceTotal").innerHTML = "1.00";
+	}
+	
+	
+	
+  
+    //************************DATABASE SECTION ********************************
+	  
+	//prefixes of implementation that we want to test
+    window.indexedDB = window.indexedDB || window.mozIndexedDB || 
+    window.webkitIndexedDB || window.msIndexedDB;
+         
+    //prefixes of window.IDB objects
+    window.IDBTransaction = window.IDBTransaction || 
+    window.webkitIDBTransaction || window.msIDBTransaction;
+    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || 
+    window.msIDBKeyRange
+         
+    if (!window.indexedDB) {
+      window.alert("Your browser doesn't support a stable version of IndexedDB.")
+    }
+    
+	//open the database
+    var db;
+	//console.log(db);
+    var request = window.indexedDB.open("BizDatabase", 1);
+         
+    request.onerror = function(event) {
+      console.log("error: ");
+    };
+         
+    request.onsuccess = function(event) {
+      db = request.result;
+      console.log("success: "+ db);
+	  getSettings();
+	  //clearTicketData();  //Important because the UI may have been refreshed during a transaction. Or
+	  // is this the best solution?  How about updating the UI to represent the current ticket data?
+	  // Let's do this above.  We'll call it updateUIAfterRefresh()
+	  updateUIAfterRefresh();
+	  //getTodaySummary(); //this updates the summary screen--------------------------------------
+    };
+	
+	const settingsData = [
+	  { id: 1, companyName: "Yard Sale POS", companyAddress: "Court Bettinelli, Suite 17M", companyState: "CA", companyZip: "93274",
+	    companyPhone: "559-759-0000", ticketNo: 1}
+	];
+	
+	//check to see if the stores need to be created.
+	request.onupgradeneeded = function(event) {
+      var db = event.target.result;
+	  
+	  var settingsStore = db.createObjectStore("settings", {keyPath: "id"});
+	  settingsStore.add(settingsData[0]);
+	  
+	  //var ticketStore = db.createObjectStore("ticket", {autoIncrement: true}); //----------------------------------
+	  var ticketStore = db.createObjectStore("ticket", {keyPath: "id", autoIncrement: true});
+	  
+	  var ticketSummaryStore = db.createObjectStore("ticketSummary", {autoIncrement: true});
+	  ticketSummaryStore.createIndex('ticketNo', 'ticketNo', {unique: false});
+	  ticketSummaryStore.createIndex('custNo', 'custNo', {unique: false});
+	  ticketSummaryStore.createIndex('yyyymmdd', 'yyyymmdd', {unique: false});
+	  
+	  var ticketDetailsStore = db.createObjectStore("ticketDetails", {autoIncrement: true});
+	  ticketDetailsStore.createIndex('ticketNo', 'ticketNo', {unique: false});
+	 
+    }
+	
+	function getSettings(){
+	  var transaction = db.transaction(["settings"]); 
+      var objectStore = transaction.objectStore("settings");
+      var request = objectStore.get(1);
+   
+      request.onerror = function(event) {
+        alert("Unable to retrieve data from database!");
+      };
+   
+      request.onsuccess = function(event) {
+        console.log("Got the settings!");
+		//document.getElementById("compName").innerHTML = request.result.companyName + '&emsp;';
+		
+		//populate the global variables for receipt and initial ticket number.
+		window.coName = request.result.companyName;
+		window.coAddress = request.result.companyAddress;
+		window.coState = request.result.companyState;
+		window.coZip = request.result.companyZip;
+		window.coPhone = request.result.companyPhone;
+		window.tickNo = request.result.ticketNo;
+		console.log("Ticket No: " + tickNo);
+      };
+    }
+	
+	function updateUIAfterRefresh(){
+	  //cursor?  sure. insert into the ticket screen and grab the value of the last item? and store it to window.ticket holder.
+	  //if empty, then what?
+	  var transaction = db.transaction(['ticket'], 'readonly');
+      var objectStore = transaction.objectStore('ticket');
+	  
+	  var countRequest = objectStore.count();
+      countRequest.onsuccess = function() {
+	    //if > 0 then show checkout bar
+		if(countRequest.result > 0){
+          console.log(countRequest.result);
+		   document.getElementById("finishbuttonssection").style.display = "block";
+		}
+      }
+	  
+	  //cursor fails if there is no item in the ticket store, so it doesn't do anything.
+	  objectStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+        if(cursor) {
+          
+          //console.log(cursor.value.id);                  
+        
+		  document.getElementById("ticketview").innerHTML += 
+		    "<div class='ticketitem'>" + 
+              "<div>" + cursor.value.productDesc1 + "</div>" +
+	          "<div style='text-align: right'>" + cursor.value.qty + "</div>" +
+	          "<div style='text-align: right'>" + cursor.value.price.toFixed(2) + "</div>" +
+	        "</div>";
+
+          cursor.continue();
+        } else {
+          console.log('Entries all displayed.');
+		  getTicketTotals();
+        }
+      };
+	  
+	}
+	
+	
+	//Add to ticket store. ------------------------------------------------
+	
+	function addTicketItem(){
+	  //amt is initially set to 0, so make sure that it is at least 1 before adding.
+	  if(amt == 0){
+	    amt = 1;
+	  }
+	  
+	  //Free merchandise has to be zero cost!
+	  if(window.currentMerch == "Free"){
+	    currentMerch += " ($" + window.price.toFixed(2) + ")";
+		window.price = 0;
+	  }
+	  
+	  const ticketData = [
+	    { productDesc1: window.currentMerch, 
+	    qty: window.amt, price: window.price }
+	  ];
+	  
+	  var ticketTransaction = db.transaction(["ticket"], "readwrite");
+	  
+	  ticketTransaction.oncomplete = function(event) {
+        //alert("Added to ticket");
+      };
+	  
+	  ticketTransaction.onerror = function(event) {
+        alert("Transaction not opened due to error.");
+      };
+	 
+	  var ticketStore = ticketTransaction.objectStore("ticket");
+
+      var ticketStoreRequest = ticketStore.add(ticketData[0]);
+	  
+	  ticketStoreRequest.onsuccess = function(event) {
+	    updateTicketDisplay();
+		
+		//allow button to check out, undo or clear all entries.
+	    document.getElementById("finishbuttonssection").style.display = "block";
+		
+		//also update the interface such as resetting the button states.
+		resetEnvironment();
+		
+        //update totals
+		console.log("Added item. Now get totals.");
+		getTicketTotals();
+      };
+	}
+	
+	window.ticketTotal = 0;
+	window.quantityTotal = 0;
+	function getTicketTotals() {
+	  window.ticketTotal = 0;
+	  window.quantityTotal = 0;
+	  var ticketStore = db.transaction("ticket").objectStore("ticket"); //saves on var assignments
+
+      ticketStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+		  window.quantityTotal += cursor.value.qty;
+		  window.ticketTotal += cursor.value.price * cursor.value.qty;
+		  
+          cursor.continue();
+        }
+        else {
+		  if(quantityTotal == 1){
+		    itemString = " item): $";
+		  } else {
+		    itemString = " items): $";
+		  }
+		  
+          console.log(quantityTotal + " is the total qty; " + ticketTotal + " is the total price.");
+		  document.getElementById("currentTotal").innerHTML = "Total (" + quantityTotal + itemString + ticketTotal.toFixed(2);
+		  //done.
+        }
+	  }
+	}
+	
+	
+	
+	// Checkout section -------------------------------------------------------------
+	
+	
+	function undoLast(){
+		
+		var lastItem;  // to track the last entry.
+		
+		var transaction = db.transaction("ticket", "readwrite");
+        var objectStore = transaction.objectStore("ticket");
+        var request = objectStore.openCursor();
+        request.onsuccess = function(event) {
+          var cursor = event.target.result;
+          if(cursor) {
+			console.log(cursor.value.id);
+			lastItem = cursor.value.id;
+            cursor.continue();
+          } else {
+            // no more results
+		    // we got the lastItem, so delete it since it's the last one.
+		    objectStore.delete(lastItem);
+			
+			//update display;
+			let tktview = document.getElementById("ticketview");
+		    tktview.removeChild(tktview.lastElementChild);
+			
+			//update totals;
+			getTicketTotals();
+			console.log("quantitytotal = " + quantityTotal);
+			
+			//check to see if that was the last item, so that the checkout bar goes away
+			var countRequest = objectStore.count();
+            countRequest.onsuccess = function() {
+              console.log("count = " + countRequest.result);
+			  if(countRequest.result == 0){
+			    document.getElementById("finishbuttonssection").style.display = "none";
+			  }
+            }
+			
+			
+          }
+        };
+		
+		
+	}
+	
+	function startOver(){
+	  //clear ticket store
+	  clearTicketData();
+	  //reset environment
+	  
+	  //and clear the environment when done with onsuccess.
+		//cancelPayAmt();
+		
+		resetEnvironment();
+		
+		document.getElementById("finishbuttonssection").style.display = "none";
+		
+		
+		document.getElementById("ticketview").innerHTML = "";
+		
+		document.getElementById("currentTotal").innerHTML = "Let's start over!";
+		//is clearing the checkout screen necessary?
+		
+	
+	}
+	
+	function checkOut(){
+	  //we have total price and quantity, so now get pay amount and calculate change
+	  //before passing the routine to saving the ticket
+	  document.getElementById("checkoutSection").style.display = "block";
+	  //clear area for payment
+	  //document.getElementById("checkoutTotal").style.display = "none";
+	  document.getElementById("buttonssection").style.display = "none";
+	  
+	  payAmount = ticketTotal;
+	  window.payChange = 0;
+	  
+	  document.getElementById("finalTotal").innerHTML = "Total (" + quantityTotal + " items): $" + payAmount.toFixed(2);
+	  document.getElementById("payLblAmt").innerHTML = payAmount.toFixed(2);
+	  document.getElementById("changeLblAmt").innerHTML = "Change: $" + payChange.toFixed(2);
+	}  
+	
+	
+	function cancelPayAmt(){
+	  document.getElementById("checkoutSection").style.display = "none";
+	  document.getElementById("buttonssection").style.display = "block";
+	}
+	
+	
+	
+	
+	function finalizeTransaction(){
+	  //get and increase ticketNo in the settings store. this has to be done first
+	  //open a transaction, open the datastore and request to read and update the info!
+	  var transaction = db.transaction(["settings"], "readwrite");
+	  transaction.onerror = function(event) {
+        console.log("Failed to open transaction on saveTicket.");
+      };
+	  var objectStore = transaction.objectStore("settings");
+	  var objectStoreRequest = objectStore.get(1);
+      objectStoreRequest.onerror = event => {
+		console.log("Failed to get ticketNo.");
+      };
+      objectStoreRequest.onsuccess = event => {
+        
+		//save ticketNo to a global variable;
+		window.currTicketNo = objectStoreRequest.result.ticketNo;
+		console.log("ticketno " + currTicketNo);
+		//increment ticketNo.
+		
+		// Get the old value that we want to update
+        var data = event.target.result;
+
+        // update the value(s) in the object that you want to change
+        data.ticketNo = currTicketNo + 1;
+
+        // Put this updated object back into the database.
+        var requestUpdate = objectStore.put(data);
+        requestUpdate.onerror = event => {
+          // Do something with the error
+		  console("failed request to update.");
+		};
+       
+        requestUpdate.onsuccess = event => {
+          // Success - the data is updated!
+		  console.log("ticketNo+ " + objectStoreRequest.result.ticketNo);
+		  saveTicketSummary();
+        };
+		
+		//save the ticket info to ticketDetails store now.
+		saveTicketDetails();
+		
+		//simultaneously save the ticket info to ticketSummary now.
+		clearTicketData(); // Async issue? Savetickets occurs just prior.
+		
+		
+		
+		// Clear the environment when done with onsuccess.
+		cancelPayAmt();
+		
+		resetEnvironment();
+		
+		document.getElementById("finishbuttonssection").style.display = "none";
+		
+		//display last change.
+		
+		document.getElementById("currentTotal").innerHTML = "Last change: $" + payChange.toFixed(2);
+		
+		document.getElementById("ticketview").innerHTML = "";
+		
+		
+		
+      };
+	
+	}
+	
+	function saveTicketDetails(){
+	  //open the ticket store and foreach, add to the ticketDetails store
+	  //onsuccess, run the clear ticket function to start a new transaction.
+	  var ticketsToSave = [];
+	  
+	  //***********you have to add the ticketNo in the array before adding. otherwise error. ******//
+	  
+	  var transaction = db.transaction(["ticket"], "readonly");
+      var objectStore = transaction.objectStore("ticket");  
+
+      objectStore.getAll().onsuccess = event => {
+        console.log("Got all ticket items: " + event.target.result);
+		ticketsToSave = event.target.result;
+		
+		//inject ticketNo into the array first.
+		//for each
+		//  ticketsToSave[0]["id"] = 333;
+		console.log(ticketsToSave[0]);
+		
+		for (var i in ticketsToSave) {
+	      ticketsToSave[i]["ticketNo"] = window.currTicketNo;
+	    }
+
+
+		//got them, now add the into ticketDetails
+		var transaction = db.transaction(["ticketDetails"], "readwrite");
+		var objectStore = transaction.objectStore("ticketDetails");
+		//request to add array ticketsToSave
+		
+        ticketsToSave.forEach((tickItem) => {
+          var request = objectStore.add(tickItem);
+		});
+      };
+      
+	}
+	
+	
+	//to hold the custNo (which defaults to 0 for now) , ticketNo, time/date (done automatically), total, how paid, amount given, change
+
+	function saveTicketSummary(){
+	  //custNo
+	  window.customerNum = 0; //custNo
+	
+	  // ticketNo = window.currTicketNo;
+	  
+	  //datetime which?
+	  let current = new Date();
+      let cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
+      let cTime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
+      let dateTime = cDate + ' ' + cTime;
+	  
+	  //working with dates here
+      var stringMonth;
+      var stringDay;
+
+      var todayDate = new Date();
+      var todayMonth = 1 + todayDate.getMonth();
+      if(todayMonth < 10){
+        stringMonth = "0" + todayMonth.toString();
+      }
+      else {
+        stringMonth = todayMonth.toString();
+      }
+      if(todayDate.getDate() < 10){
+        stringDay = "0" + todayDate.getDate().toString();
+      }
+      else {
+        stringDay = todayDate.getDate().toString();
+      }
+	
+      var stringTodayDate = todayDate.getFullYear().toString() + stringMonth + stringDay;
+      console.log(stringTodayDate);
+	  
+	  //now get the time to save as well since Date() doesn't work well with arrays when saving from a store.
+	  
+	  var stringTime;
+	  var stringHour;
+	  var stringMin;
+	  var stringSec;
+	  
+	  if(todayDate.getHours() < 10){
+        stringHour = "0" + todayDate.getHours().toString();
+      }
+      else {
+        stringHour = todayDate.getHours().toString();
+      }
+	  
+	  if(todayDate.getMinutes() < 10){
+        stringMin = "0" + todayDate.getMinutes().toString();
+      }
+      else {
+        stringMin = todayDate.getMinutes().toString();
+      }
+	  
+	  if(todayDate.getSeconds() < 10){
+        stringSec = "0" + todayDate.getSeconds().toString();
+      }
+      else {
+        stringSec = todayDate.getSeconds().toString();
+      }
+	  
+	  stringTime = stringHour + stringMin + stringSec;
+	  
+	  
+	  
+	  //window.ticketTotal = 0;
+	  //window.quantityTotal = 0;
+	  //
+	  window.payType = "Cash";
+	  //window.payAmount = keep track?
+	  //window.payChange = keep track?
+	  
+	  const ticketSummaryData = [
+	  { custNo: 0, yyyymmdd: stringTodayDate, hhmmss: stringTime, qtyTotal: quantityTotal, priceTotal: ticketTotal, payType: "Cash",
+	    payAmt: payAmount, change: payChange, ticketNo: currTicketNo}];
+	  
+	  console.log("ticket summary data ready to add in the ticketSummary store.");
+	  
+	  //get a transaction, dataStore, request, add...
+	  var trans = db.transaction(["ticketSummary"], "readwrite");
+	  var objStore = trans.objectStore("ticketSummary");
+	  
+	  
+	  var rqst = objStore.add(ticketSummaryData[0]);
+	  
+	  
+	  rqst.onsuccess = event => { 
+		console.log("added summary to ticketSummary store.");
+      };
+	}
+	
+	function clearTicketData(){
+	  console.log("clear ticket data");
+	  var transaction = db.transaction(["ticket"], "readwrite");
+      var objectStore = transaction.objectStore("ticket");
+      var objectStoreRequest = objectStore.clear();
+
+      objectStoreRequest.onsuccess = function(event) {
+      // report the success of our request
+        console.log("Ticket store cleared.");
+      };	 
+	}
+	
+	// Checkout related. ----------------------------------------------
+	// 
+	
+	function addPay(addPayment){
+	  if(payAmount == ticketTotal){
+		if(addPayment == 0){
+		  return;
+		}
+		payAmount = (addPayment * .01);
+		  
+		if(payAmount < ticketTotal){
+		  document.getElementById("payButton").style.display = "none";
+		}
+	  }
+	  else{
+	    tempPayAmount = ((payAmount * 10) + (addPayment * .01));
+	    if(tempPayAmount <= 1000){
+		  payAmount = tempPayAmount;
+		  if(payAmount >= ticketTotal){
+		    //fix this to have two decimals before storing in store table.
+		    payChange = payAmount - ticketTotal;
+			document.getElementById("payButton").style.cursor = "pointer";
+			document.getElementById("payButton").style.display = "block";
+			document.getElementById("changeLblAmt").innerHTML = "Change: $" + payChange.toFixed(2);
+			console.log("finish up");
+		  }
+		}
+	  }
+	  document.getElementById("payLblAmt").innerHTML = payAmount.toFixed(2);
+	}
+	
+	function clearPayAmt(){
+	  payAmount = ticketTotal;
+	  window.payChange = 0;
+	  
+	  //document.getElementById("finalTotal").innerHTML = "Total (" + quantityTotal + " items): $" + payAmount.toFixed(2);
+	  document.getElementById("payLblAmt").innerHTML = payAmount.toFixed(2);
+	  document.getElementById("changeLblAmt").innerHTML = "Change: $" + payChange.toFixed(2);
+	  
+	  document.getElementById("payButton").style.display = "block";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//Summary related. -------------------------------------------------
+	window.todayTicketDetails = [];
+    window.todayTicketSummary = [];
+
+    window.todayTotalQty = 0;
+    window.todayTotalPrice = 0;
+	
+	//working with dates here
+    var stringMonth;
+    var stringDay;
+    window.stringTodayDate = " ";
+
+    var todayDate = new Date();
+    var todayMonth = 1 + todayDate.getMonth();
+    if(todayMonth < 10){
+      stringMonth = "0" + todayMonth.toString();
+    }
+    else {
+    stringMonth = todayMonth.toString();
+    }
+	
+    if(todayDate.getDate() < 10){
+      stringDay = "0" + todayDate.getDate().toString();
+    }
+    else {
+      stringDay = todayDate.getDate().toString();
+    }
+	
+    stringTodayDate = todayDate.getFullYear().toString() + stringMonth + stringDay;
+    console.log(stringTodayDate);
+
+    //steps to display summary: filter out data from today and store them into arrays for both details and summary
+    //display like a ticket: top -- ticketno, datetime, qty, totalcost. middle- desc, qty, price. bottom - 
+    function getTodaySummary(){
+      todayTicketSummary = [];
+      var summ = [];
+      var transaction = db.transaction(['ticketSummary'], 'readonly');
+      var objectStore = transaction.objectStore('ticketSummary');
+      var myIndex = objectStore.index('yyyymmdd');
+      var getRequest = myIndex.getAll(stringTodayDate); //picks up all
+  
+  
+      getRequest.onsuccess = event => {
+        todayTicketSummary = getRequest.result;
+	    console.log(todayTicketSummary);
+	    console.log(todayTicketSummary.length);
+	    if(todayTicketSummary.length > 0){
+	      window.todayFirstTic = todayTicketSummary[0]['ticketNo'];
+	      //display last ticket item to be use to display details
+	      //console.log(todayTicketSummary[todayTicketSummary.length - 1]['ticketNo']);
+	      window.todayLastTic = todayTicketSummary[todayTicketSummary.length - 1]['ticketNo'];
+	      getTodaySummaryCont();
+	    }
+	    else{
+	      //
+	    }
+      } 
+    };
+
+    function getTodaySummaryCont(){
+      todayTicketDetails =[];
+
+      var transaction = db.transaction(['ticketDetails'], 'readonly');
+      var objectStore = transaction.objectStore('ticketDetails');
+      var myIndex = objectStore.index('ticketNo');
+      var getRequest = myIndex.getAll(IDBKeyRange.bound(todayFirstTic, todayLastTic));
+  
+      getRequest.onsuccess = event => {
+        //console.log(getRequest.result);
+	    todayTicketDetails = getRequest.result;
+	    displayTodaySummary();
+	
+      }
+    }
+	
+    function displayTodaySummary(){
+	  todayTotalQty = 0;
+      todayTotalPrice = 0;
+	
+      for(i in todayTicketSummary){
+ 
+        if(i % 2 == 1){
+          var ticketscolor = "tickets dark";
+	      var ticketitemcolor = "ticketItem dark";
+        }
+        else{
+          var ticketscolor = "tickets";
+	      var ticketitemcolor = "ticketItem";
+        }
+ 
+        var dt = todayTicketSummary[i]['yyyymmdd'];
+		var tt = todayTicketSummary[i]['hhmmss'];
+		
+		var ddtt = dt.substr(4,2) + "/" + dt.substr(6,2) + "/" + dt.substr(0,4) + " " +
+    	  tt.substr(0,2) + ":" + tt.substr(2,2) + ":" + tt.substr(4,2);
+		  
+		console.log(dt);
+		console.log(ddtt);
+ 
+        var ticketNum = todayTicketSummary[i]['ticketNo'];
+        document.getElementById('displayhere').innerHTML += 
+          "<div class='" + ticketscolor + "'>" + 
+            "<div class='ticket'>" + "Invoice: " + ticketNum + "</div>" + 
+            "<div class='datetime'>" + "Datetime: " + ddtt + "</div>" + 
+            "<div class='quantity'>" + "Qty: " + todayTicketSummary[i]['qtyTotal'] + "</div>" + 
+            "<div class='priceTotal'>" + "Price: " + todayTicketSummary[i]['priceTotal'].toFixed(2) + "</div>" + 
+            "<div class='pay'>" + "Paid: " + todayTicketSummary[i]['payAmt'].toFixed(2) + "</div>" + 
+            "<div class='change'>" + "Change: " + todayTicketSummary[i]['change'].toFixed(2) + "</div>" +
+          "</div>";
+        for(j in todayTicketDetails){
+          if(todayTicketDetails[j]['ticketNo'] == ticketNum){
+	      console.log("details");
+	      document.getElementById('displayhere').innerHTML += 
+	        "<div class='" + ticketitemcolor + "'>" +
+	          "<div class='desc'>" + todayTicketDetails[j]['productDesc1'] + "</div>" +
+		      "<div class='qty'>" + todayTicketDetails[j]['qty'] + "</div>" +
+		      "<div class='price'>" + todayTicketDetails[j]['price'].toFixed(2) + "</div>" +
+	        "</div>";
+	      }
+        }
+        todayTotalQty += todayTicketSummary[i]['qtyTotal'];
+        todayTotalPrice += todayTicketSummary[i]['priceTotal'];
+        console.log(todayTotalPrice);
+      }
+      //summary here.
+      document.getElementById('displaysummary').innerHTML = "<p>Total (" + todayTotalQty + " items): $" + todayTotalPrice.toFixed(2);
+    }	
+	
+	
+	function refreshAmt(){
+	  document.getElementById('displayhere').innerHTML = "";
+	   document.getElementById('displaysummary').innerHTML = "";
+	  
+	  getTodaySummary();
+	}
+	
+	
+	// Admin related. -----------------------------------------------------
+	window.delPIN = 0;
+  
+    function doOver(){
+      delPIN = 0;
+    }
+  
+
+    function getPIN(i){
+	  if(delPIN > 10000000){
+	    delPIN = 0;
+	  }
+	  
+      if(i == 0 && delPIN == 0){
+	    return;
+	  }
+      if(i > 0 && delPIN == 0){
+	    delPIN = i;
+	  }
+	  else{
+	    delPIN = delPIN * 10 + i;
+	  }
+    }
+
+    function deleteMyDB(){
+      if(delPIN == 31415926) {
+        var DBDeleteRequest = window.indexedDB.deleteDatabase("BizDatabase");
+        document.getElementById('deleteMessage').innerHTML = "Ouch. Done.";
+		
+        DBDeleteRequest.onerror = function(event) {
+          console.log("Error deleting database.");
+        };
+
+        DBDeleteRequest.onsuccess = function(event) {
+		  //not getting here.
+          console.log("Database deleted successfully");
+          console.log(event.result); // should be undefined
+        };
+	  }
+	  else{
+	    delPIN = 0;
+	    console.log("Incorrect PIN");
+		document.getElementById('deleteMessage').innerHTML = "Incorrect code.";
+	  }
+    }
+	
+  </script>
+</head>
+<body>
+<div id="nav">
+    <div><a onclick="openPage('mainpage')" id="company_name">YSPOS</a></div>
+    <div><a onclick="openPage('summary')">Summary</a></div>
+    <div><a onclick="openPage('admin')">Admin</a></div>
+    <div><a href="https://www.facebook.com/YS-POS-103061088987341/" target="_blank">About</a></div>
+</div>
+
+<div class="page" id="mainpage">
+  <div id="adjustDisplay">
+    <div id="ticketsection">
+      <div id="ticketview">
+	    <!-- ticketitem goes here -->
+      </div>
+	  <div id="currentTotal" style="text-align: center; background-color: white; margin: 5px; padding: 8px;">
+	    <!-- currentTotal goes here -->
+	    Have a great day!
+	  </div>
+    </div>
+    <div> <!-- Needed to contain 2 div elements for the parent -->
+      <div id="buttonssection">
+        <div class="centerbuttons1">
+	      <div class="inputBox" id="addQtyTotal">1</div>
+	      <button class="btn" onclick="clearAddQty()">Clear</button>
+	    </div >
+        <div class="centerbuttons1">
+          <button class="btn" id="add1" onclick="addQty(1)">1</button>
+	      <button class="btn" id="add2" onclick="addQty(2)">2</button>
+	      <button class="btn" id="add3" onclick="addQty(3)">3</button>
+	      <button class="btn" id="add4" onclick="addQty(4)">4</button>
+	      <button class="btn" id="add5" onclick="addQty(5)">5</button>
+	      <button class="btn" id="add6" onclick="addQty(6)">6</button>
+	      <button class="btn" id="add7" onclick="addQty(7)">7</button>
+	      <button class="btn" id="add8" onclick="addQty(8)">8</button>
+	      <button class="btn" id="add9" onclick="addQty(9)">9</button>
+          <button class="btn" id="add0" onclick="addQty(0)">0</button>
+        </div>
+  
+        <div id="centerbuttons2default">
+	      <div class="centerbuttons2">
+            <button class="btn" id="merch1" onclick="getMerch('General', this.id)">General</button>
+	        <button class="btn" id="merch4" onclick="getMerch('Arts+crafts', this.id)">Arts & crafts</button>
+	        <button class="btn" id="merch8" onclick="getMerch('Baby+kids', this.id)">Baby & kids</button>
+	        <button class="btn" id="merch14" onclick="getMerch('Books', this.id)">Books</button>
+	        <button class="btn" id="merch16" onclick="getMerch('CDS/DVDS/VHS', this.id)">CDS, DVDS, VHS</button>
+            <button class="btn" id="merch18" onclick="getMerch('Clothes+acc', this.id)">Clothes & acc</button>
+	        <button class="btn" id="merch22" onclick="getMerch('Electronics', this.id)">Electronics</button>
+	        <button class="btn" id="merch28" onclick="getMerch('Household', this.id)">Household</button>
+	        <button class="btn" id="merch30" onclick="getMerch('Materials', this.id)">Materials</button>	 
+            <button class="btn" id="merch37" onclick="getMerch('Tools', this.id)">Tools</button>
+	        <button class="btn" id="merch38" onclick="getMerch('Toys+games', this.id)">Toys & games</button>		
+	        <button class="btn" id="merchMore" onclick="changeMerchButton()">+</button>	
+          </div>
+	    </div>
+	
+	    <div id="centerbuttons2expanded" style="display: none">  
+	      <div class="centerbuttons2">
+	        <button class="btn" id="merch1e" onclick="getMerch('General', this.id)">General</button>
+	        <button class="btn" id="merch2e" onclick="getMerch('Antiques', this.id)">Antiques</button>
+	        <button class="btn" id="merch3e" onclick="getMerch('Appliances', this.id)">Appliances</button>
+	        <button class="btn" id="merch4e" onclick="getMerch('Arts+crafts', this.id)">Arts & crafts</button>
+	        <button class="btn" id="merch5e" onclick="getMerch('ATV/UTV/Snow', this.id)">ATV, UTV, Snow</button>
+	        <button class="btn" id="merch6e" onclick="getMerch('Auto Parts', this.id)">Auto parts</button>
+	        <button class="btn" id="merch7e" onclick="getMerch('Aviation', this.id)">Aviation</button>
+	        <button class="btn" id="merch8e" onclick="getMerch('Baby+kids', this.id)">Baby & kids</button>
+	        <button class="btn" id="merch9e" onclick="getMerch('Beauty+health', this.id)">Beauty & health</button>
+	        <button class="btn" id="merch10e" onclick="getMerch('Bicycle parts', this.id)">Bicycle parts</button>
+	        <button class="btn" id="merch11e" onclick="getMerch('Bicycles', this.id)">Bicycles</button>
+	        <button class="btn" id="merch12e" onclick="getMerch('Boat parts', this.id)">Boat parts</button>
+	        <button class="btn" id="merch13e" onclick="getMerch('Boats', this.id)">Boats</button>
+	        <button class="btn" id="merch14e" onclick="getMerch('Books', this.id)">Books</button>
+	        <button class="btn" id="merch15e" onclick="getMerch('Cars+trucks', this.id)">Cars & Trucks</button>
+	        <button class="btn" id="merch16e" onclick="getMerch('CDS/DVDS/VHS', this.id)">CDS, DVDS, VHS</button>
+	        <button class="btn" id="merch17e" onclick="getMerch('Cell phones', this.id)">Cell phones</button>
+	        <button class="btn" id="merch18e" onclick="getMerch('Clothes+acc', this.id)">Clothes & acc</button>
+	        <button class="btn" id="merch19e" onclick="getMerch('Collectibles', this.id)">Collectibles</button>
+	        <button class="btn" id="merch20e" onclick="getMerch('Computer parts', this.id)">Computer parts</button>
+	        <button class="btn" id="merch21e" onclick="getMerch('Computers', this.id)">Computers</button>
+	        <button class="btn" id="merch22e" onclick="getMerch('Electronics', this.id)">Electronics</button>
+	        <button class="btn" id="merch23e" onclick="getMerch('Farm+garden', this.id)">Farm & garden</button>
+	        <button class="btn" id="merch24e" onclick="getMerch('Food', this.id)">Food</button>
+            <button class="btn" id="merch25e" onclick="getMerch('Free', this.id)">Free</button>
+	        <button class="btn" id="merch26e" onclick="getMerch('Furniture', this.id)">Furniture</button>
+	        <button class="btn" id="merch27e" onclick="getMerch('Heavy equipment', this.id)">Heavy equip</button>
+	        <button class="btn" id="merch28e" onclick="getMerch('Household', this.id)">Household</button>
+	        <button class="btn" id="merch29e" onclick="getMerch('Jewelry', this.id)">Jewelry</button>
+	        <button class="btn" id="merch30e" onclick="getMerch('Materials', this.id)">Materials</button>	  
+            <button class="btn" id="merch31e" onclick="getMerch('Motorcyles', this.id)">Motorcyles</button>
+	        <button class="btn" id="merch32e" onclick="getMerch('Music instruments', this.id)">Music inst</button>
+            <button class="btn" id="merch33e" onclick="getMerch('Photo+video', this.id)">Photo & video</button>
+	        <button class="btn" id="merch34e" onclick="getMerch('RVs+campers', this.id)">RVs & campers</button>
+	        <button class="btn" id="merch35e" onclick="getMerch('Sporting', this.id)">Sporting</button>
+	        <button class="btn" id="merch36e" onclick="getMerch('Tickets', this.id)">Tickets</button>
+	        <button class="btn" id="merch37e" onclick="getMerch('Tools', this.id)">Tools</button>
+	        <button class="btn" id="merch38e" onclick="getMerch('Toys+games', this.id)">Toys & games</button>	
+            <button class="btn" id="merch40e" onclick="getMerch('Video gaming', this.id)">Video gaming</button>
+            <button class="btn" id="merch41e" onclick="getMerch('Wheels+tires', this.id)">Wheels & tires</button>
+	      </div> 
+	    </div>
+	
+	    <div id="centerbuttons3default">
+          <div class="centerbuttons3">
+	        <button class="btn" id="price5c" onclick="getPrice(0.05)">0.05</button>
+            <button class="btn" id="price10c" onclick="getPrice(0.10)">0.10</button>
+	        <button class="btn" id="price25c" onclick="getPrice(0.25)">0.25</button>
+	        <button class="btn" id="price50c" onclick="getPrice(0.50)">0.50</button>
+	        <button class="btn" id="price75c" onclick="getPrice(0.75)">0.75</button>
+	        <button class="btn" id="price1" onclick="getPrice(1)">1.00</button>
+	        <button class="btn" id="price1p25" onclick="getPrice(1.25)">1.25</button>
+	        <button class="btn" id="price1p50" onclick="getPrice(1.50)">1.50</button>
+	        <button class="btn" id="price1p75" onclick="getPrice(1.75)">1.75</button>
+	        <button class="btn" id="price2" onclick="getPrice(2)">2.00</button>
+	        <button class="btn" id="price2p50" onclick="getPrice(2.50)">2.50</button>
+	        <button class="btn" id="price3" onclick="getPrice(3)">3.00</button>
+	        <button class="btn" id="price3p50" onclick="getPrice(3.50)">3.50</button>
+	        <button class="btn" id="price5" onclick="getPrice(5)">5.00</button>
+	        <button class="btn" id="priceMore" onclick="changePriceButton()">+</button>
+          </div>
+	    </div>
+	
+	    <div id="centerbuttons3expanded" style="display: none">
+	      <div class="centerbuttons3">
+	        <div class="inputBox" id="addPriceTotal">1.00</div>
+	        <button class="btn" onclick="clearPriceAmt()">Clear</button> 		  
+	      </div>
+	      <div class="centerbuttons3">
+	        <button class="btn" onclick="addPrice(1)">1</button>
+	        <button class="btn" onclick="addPrice(2)">2</button>
+	        <button class="btn" onclick="addPrice(3)">3</button>
+	        <button class="btn" onclick="addPrice(4)">4</button>
+	        <button class="btn" onclick="addPrice(5)">5</button>
+	        <button class="btn" onclick="addPrice(6)">6</button>
+	        <button class="btn" onclick="addPrice(7)">7</button>
+	        <button class="btn" onclick="addPrice(8)">8</button>
+	        <button class="btn" onclick="addPrice(9)">9</button>
+	        <button class="btn" onclick="addPrice(0)">0</button>
+	        <button class="btn" onclick="enterPriceAmt()" id="enterPriceBtn">Enter</button>  	
+	      </div>
+	    </div>
+		
+	    <div id="finishbuttonssection" style="display: none">
+	      <div class="finishbuttons">
+	        <button class="btnUndoLast" onclick="undoLast()">Undo Last</button>
+	        <button class="btnClearTransaction" onclick="startOver()">Start Over</button>
+	        <button class="btnCheckout" onclick="checkOut()">Checkout</button>
+	      </div>
+	    </div>
+      </div>
+	  
+      <div id="checkoutSection" style="display: none">
+	    <br><br>
+	    <div style="text-align: center;" id="finalTotal">Total</div>
+        <br><br>
+	    <div style="display: flex; justify-content: center;">
+	      <div class="dispPayAmt" id="payLblAmt" >$1000.00</div>
+          <button class="payBtn" onclick="clearPayAmt()">Clear</button>  
+          <button class="payBtn" onclick="cancelPayAmt()">Cancel</button>		  
+	    </div>
+	    <div style="display: flex; justify-content: center;">
+          <div id="checkoutButtons">
+	        <div><button class="payBtn" onclick="addPay(1)">1</button></div>
+	        <div><button class="payBtn" onclick="addPay(2)">2</button></div>
+	        <div><button class="payBtn" onclick="addPay(3)">3</button></div>
+	        <div><button class="payBtn" onclick="addPay(4)">4</button></div>
+	        <div><button class="payBtn" onclick="addPay(5)">5</button></div>
+	        <div><button class="payBtn" onclick="addPay(6)">6</button></div>
+	        <div><button class="payBtn" onclick="addPay(7)">7</button></div>
+	        <div><button class="payBtn" onclick="addPay(8)">8</button></div>
+	        <div><button class="payBtn" onclick="addPay(9)">9</button></div>
+	        <div><button class="payBtn" onclick="addPay(0)">0</button></div>
+	    	<button class="payBtn" onclick="finalizeTransaction()" id="payButton">Enter</button>
+          </div>
+	    </div>
+	    <div style="text-align: center; padding: 10px;" id="changeLblAmt">0</div>
+      </div>
+    </div>    
+  </div>
+</div>
+
+<div class="page" id="summary" style="display: none">
+  <div id="outer">
+    <div style="text-align: center"><button onclick="refreshAmt()">Refresh</div>
+    <div id="displayhere">
+	
+	</div>
+	<div id="displaysummary" style="text-align: center; padding: 5px;">
+	  Go make a sale! :)
+	</div>
+  </div>
+</div>
+
+<div class="page" id="admin" style="display: none">
+  <div style="margin: 5px">
+    <div style="font-weight: bold">Instructions</div><br>
+	<div>
+	  Simple. Choose amount > choose category > choose price. Do it again, undo, start over, or go pay.<br><br>
+	  The Summary page allows you to see your transactions throughout the day. Press 'Refresh' to update the page.<br><br>
+	  If you decide to delete the database, read on.<br><br>
+	  If you have any questions, comments or want to see what we're up to, please visit the 'About' link above to
+	  visit our FB page. Enjoy.<br><br>
+	
+	</div>
+    <div style="font-weight: bold">Database</div><br>
+    <div style="text-align: center">Delete the database? Enter the first 8 digits of Pi excluding the decimal.</div>
+    <div style="display: flex; justify-content: center">
+	  <div><button class="delDB" onclick="getPIN(0)">0</button></div>
+	  <div><button class="delDB" onclick="getPIN(1)">1</button></div>
+	  <div><button class="delDB" onclick="getPIN(2)">2</button></div>
+	  <div><button class="delDB" onclick="getPIN(3)">3</button></div>
+	  <div><button class="delDB" onclick="getPIN(4)">4</button></div>
+	  <div><button class="delDB" onclick="getPIN(5)">5</button></div>
+	  <div><button class="delDB" onclick="getPIN(6)">6</button></div>
+	  <div><button class="delDB" onclick="getPIN(7)">7</button></div>
+	  <div><button class="delDB" onclick="getPIN(8)">8</button></div>
+	  <div><button class="delDB" onclick="getPIN(9)">9</button></div>
+	</div>
+	<div style="display: flex; justify-content: center;">
+	  <div><button class="delDB" onclick="deleteMyDB()">Enter</button></div>
+	  <div><button class="delDB" onclick="doOver()">Do Over</button></div>
+    </div>
+	<div style="text-align: center" id="deleteMessage"></div>
+  </div>
+</div>
+</body>
+</html>
